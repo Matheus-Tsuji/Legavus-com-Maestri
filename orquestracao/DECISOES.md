@@ -17,3 +17,4 @@
 16. QA-L2: 1024px fica em 2 colunas (prompt define desktop >= 1024); empilha abaixo de 1024.
 17. Pedido do usuario: (a) coluna esquerda com campos como CAIXAS DE TEXTO visiveis (titulo, data, editor TipTap em caixa com toolbar, como referencias/layout-referencia.png); (b) Dossie com as 5 abas horizontais do acordeao SEMPRE visiveis, abrindo/fechando para baixo, inclusive no estado vazio (1. Parecer aberto com '(parecer narrativo gerado)'; 2 a 5 recolhidas).
 18. CANCELADO: o usuario aprovou o layout atual de dev (Preparacao e Captura como esta). Nenhuma mudanca da T14 foi aplicada.
+19. Pedido do usuario: remover o botao "Revisar" (por enquanto). Com titulo valido + data passada + >=50 palavras, "Enviar para Analise e Registro" habilita direto. Ao clicar: fase 3 ativa + Dossie carregando -> Dossie pronto -> fase 4 (Analise Ontologica, mock) -> todas concluidas (fase 5 registrada). Substitui os itens 2 e 6 neste ponto.
