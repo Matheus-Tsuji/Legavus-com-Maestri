@@ -36,25 +36,25 @@ function iniciar() {
     revelarTitulos.t = setTimeout(() => {
       if (innerWidth === larguraAnt) return;
       larguraAnt = innerWidth;
-      for (const v of document.querySelectorAll(".view-active")) revelarTitulos(v, false);
+      for (const v of document.querySelectorAll(".view-active, .col-dossie")) revelarTitulos(v, false);
     }, 200);
   });
 
   // ---- Entrada de tela (Preparação e Captura) ----
   function entrarTela(view, inicial) {
     revelarTitulos(view);
-    const blocos = view.matches("#view-preparacao")
-      ? view.querySelectorAll(".lede, .prep-step, .prep-footer")
-      : view.querySelectorAll(".stepper, .col-captura .field, .col-captura .actions, .col-dossie > :not(h2)");
-    gsap.from(view.matches("#view-captura") ? view.querySelector(".capture-card") : [], { opacity: 0, y: 28, duration: 0.7, ease: E, clearProps: "all" });
-    gsap.from(blocos, { opacity: 0, y: 18, duration: 0.7, ease: E, stagger: 0.08, delay: inicial ? 0.45 : 0.3, clearProps: "all" });
+    const blocos = view.querySelectorAll(view.matches("#view-preparacao") ? ".lede, .prep-step, .prep-footer" : ".field, .actions");
+    gsap.from(blocos, { opacity: 0, y: 18, duration: 0.7, ease: E, stagger: 0.08, delay: inicial ? 0.45 : 0.25, clearProps: "all" });
   }
   const estavaAtiva = new Map();
   for (const v of document.querySelectorAll("[data-view]")) estavaAtiva.set(v, v.classList.contains("view-active"));
-  document.fonts.ready.then(() => entrarTela(document.querySelector(".view-active"), true));
+  document.fonts.ready.then(() => {
+    entrarTela(document.querySelector(".view-active"), true);
+    revelarTitulos(document.querySelector(".col-dossie")); // painel sempre visível: título entra uma vez
+  });
 
   // ---- Observador único: classes e data-* do contrato ----
-  const alvos = [...document.querySelectorAll("[data-view], .modal, #painel-dossie, .status-badge")];
+  const alvos = [...document.querySelectorAll("[data-view], .modal, #painel-dossie, .status-badge, .step-item")];
   const obsAttr = new MutationObserver((muts) => {
     for (const m of muts) {
       const el = m.target;
@@ -73,6 +73,8 @@ function iniciar() {
         if (el.dataset.state === "ready" && m.oldValue !== "ready") {
           gsap.from("#dossie-conteudo .chips-block, #dossie-conteudo .accordion-item", { opacity: 0, y: 14, duration: 0.6, ease: E, stagger: 0.09, clearProps: "all" });
         }
+      } else if (el.matches(".step-item")) {
+        if (el.classList.contains("is-active") && !m.oldValue?.includes("is-active")) gsap.fromTo(el.querySelector(".step-dot"), { scale: 0.7 }, { scale: 1, duration: 0.5, ease: "back.out(2)", clearProps: "all" });
       } else if (el.matches(".status-badge")) {
         if (el.dataset.status !== m.oldValue) gsap.fromTo(el, { scale: 0.85 }, { scale: 1, duration: 0.5, ease: "back.out(2)", clearProps: "all" });
       }

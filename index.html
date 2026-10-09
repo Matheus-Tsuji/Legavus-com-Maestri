@@ -46,11 +46,19 @@
     <span class="site-header-note">Grafo da Vida · POC</span>
   </header>
 
-  <main id="app">
-
-    <!-- ============ TELA 1: PREPARAÇÃO ============ -->
+  <main id="app" class="app-card">
+    <!-- Coluna esquerda: stepper compartilhado + fase atual (views alternadas) -->
+    <div class="col-esq">
+      <ol id="stepper-fluxo" class="stepper" aria-label="Fases do fluxo">
+        <li class="step-item is-active" data-step="1" aria-current="step"><span class="step-dot" aria-hidden="true">1</span><span class="step-label">Preparação</span></li>
+        <li class="step-item" data-step="2"><span class="step-dot" aria-hidden="true">2</span><span class="step-label">Narração da Experiência</span></li>
+        <li class="step-item" data-step="3"><span class="step-dot" aria-hidden="true">3</span><span class="step-label">Enviar p/ Análise e Registro</span></li>
+        <li class="step-item" data-step="4"><span class="step-dot" aria-hidden="true">4</span><span class="step-label">Análise Ontológica da Experiência</span></li>
+        <li class="step-item" data-step="5"><span class="step-dot" aria-hidden="true">5</span><span class="step-label">Registro da Experiência</span></li>
+      </ol>
+      <div class="col-esq-corpo" data-lenis-prevent>
     <section id="view-preparacao" class="view view-active" data-view="preparacao" aria-labelledby="titulo-preparacao">
-      <div class="prep-wrap">
+      <div class="view-corpo">
         <h1 id="titulo-preparacao" class="display">Preparação</h1>
         <p class="lede">Antes de registrar uma experiência, carregamos as referências do seu Grafo e ativamos o Leitor Narrativo.</p>
 
@@ -105,20 +113,10 @@
       </div>
     </section>
 
-    <!-- ============ TELAS 2.1 e 2.2: CAPTURA + DOSSIÊ ============ -->
+    <!-- ============ TELA 2.1: NARRAÇÃO (CAPTURA) ============ -->
     <section id="view-captura" class="view view-hidden" data-view="captura" aria-labelledby="titulo-captura">
-      <div class="capture-card">
-
-        <!-- Coluna esquerda: Captura -->
-        <div class="col-captura">
+        <div class="view-corpo">
           <h1 id="titulo-captura" class="display">Captura da Experiência</h1>
-
-          <ol id="stepper-fluxo" class="stepper" aria-label="Etapas do fluxo">
-            <li class="step-item is-active" data-step="1" aria-current="step"><span class="step-dot" aria-hidden="true"></span><span class="step-label">Narração da Experiência</span></li>
-            <li class="step-item" data-step="2"><span class="step-dot" aria-hidden="true"></span><span class="step-label">Enviar p/ Análise e Registro</span></li>
-            <li class="step-item" data-step="3"><span class="step-dot" aria-hidden="true"></span><span class="step-label">Análise Ontológica da Experiência</span></li>
-            <li class="step-item" data-step="4"><span class="step-dot" aria-hidden="true"></span><span class="step-label">Registro da Experiência</span></li>
-          </ol>
 
           <div class="field-row">
             <div class="field">
@@ -175,14 +173,21 @@
             <button type="button" id="btn-enviar-analise" class="btn btn-primary" disabled>Enviar para Análise e Registro →</button>
           </div>
         </div>
+    </section>
+      </div>
+    </div>
 
-        <!-- Coluna direita: Dossiê -->
-        <aside id="painel-dossie" class="col-dossie" data-state="empty" aria-labelledby="titulo-dossie">
-          <h2 id="titulo-dossie" class="display display-sm">Dossiê Narrativo — Experiência 001</h2>
+    <!-- ============ DOSSIÊ NARRATIVO (sempre visível) ============ -->
+        <aside id="painel-dossie" class="col-dossie" data-lenis-prevent data-state="empty" aria-labelledby="titulo-dossie">
+          <div class="dossie-head">
+            <h2 id="titulo-dossie" class="display display-sm">Dossiê Narrativo — Experiência 001</h2>
+            <span id="indicador-ia" class="status-badge" data-status="idle" aria-live="polite">IA: aguardando</span>
+          </div>
+          <div class="dossie-corpo" data-lenis-prevent>
 
           <div id="dossie-vazio" class="dossie-vazio">
             <p class="dossie-vazio-texto">(parecer narrativo gerado)</p>
-            <p class="field-hint">Escreva a narrativa e use “Revisar” para receber o parecer do Leitor Narrativo.</p>
+            <p class="field-hint">O resultado da IA aparecerá aqui. Na captura, use “Revisar” para receber o parecer do Leitor Narrativo.</p>
           </div>
 
           <div id="dossie-loading" class="dossie-loading" role="status" aria-live="polite">
@@ -232,9 +237,8 @@
               </div>
             </div>
           </div>
+          </div>
         </aside>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
