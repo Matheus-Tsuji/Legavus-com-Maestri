@@ -1,18 +1,9 @@
 // Tela 2.2: Dossiê Narrativo (retorno do Leitor), acordeão, comparação original × revisada e stepper.
 import { enviarAoLeitorNarrativo } from "../services/mock.js";
+import { stepper } from "./main.js";
 
 const $ = (id) => document.getElementById(id);
 const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
-
-// Etapa `n` ativa; as anteriores concluídas. n = 5 → todas concluídas.
-function stepper(n) {
-  for (const li of $("stepper-fluxo").querySelectorAll(".step-item")) {
-    const s = Number(li.dataset.step);
-    li.classList.toggle("is-completed", s < n);
-    li.classList.toggle("is-active", s === n);
-    if (s === n) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
-  }
-}
 
 function lista(el, itens) {
   const ul = document.createElement("ul");
@@ -73,7 +64,7 @@ export function iniciarRetorno(captura) {
     mostrarVersao($("toggle-comparacao").querySelector('[aria-pressed="true"]').dataset.mode);
     painel.dataset.state = "ready";
     captura.validar();
-    stepper(2);
+    stepper(3);
     enviar.disabled = false;
   });
 
@@ -92,11 +83,10 @@ export function iniciarRetorno(captura) {
   enviar.addEventListener("click", async () => {
     enviar.disabled = true;
     revisar.disabled = true;
-    stepper(3);
+    stepper(4);
     msg.textContent = "Análise ontológica em andamento…";
     await esperar(1200); // TROCAR PELO BACKEND: envio para Análise Ontológica e Registro (sem função no mock por ora).
-    stepper(5);
-    $("stepper-fluxo").querySelector('[data-step="4"]').setAttribute("aria-current", "step");
+    stepper(6);
     msg.textContent = "✓ Experiência registrada (simulação).";
   });
 }

@@ -15,6 +15,13 @@ function status(id, s) {
   $(id).textContent = TEXTO_STATUS[s];
 }
 
+// Badge #indicador-ia no cabeçalho do Dossiê.
+const TEXTO_IA = { loading: "IA: conectando…", ok: "IA: Leitor ativo", nok: "IA: falhou" };
+function indicadorIA(s) {
+  $("indicador-ia").dataset.status = s;
+  $("indicador-ia").textContent = TEXTO_IA[s];
+}
+
 // aoAvancar(entidades) é chamado no clique de #btn-avancar-captura.
 export function iniciarPreparacao(aoAvancar) {
   let entidades = null;
@@ -59,6 +66,7 @@ export function iniciarPreparacao(aoAvancar) {
   async function passo2() {
     $("btn-passo-2").disabled = true;
     $("btn-retry-passo-2").hidden = true;
+    indicadorIA("loading");
     for (const { id, fn } of etapas2) {
       if ($("status-" + id).dataset.status === "ok") continue;
       barra("progresso-" + id, 60);
@@ -69,11 +77,13 @@ export function iniciarPreparacao(aoAvancar) {
         barra("progresso-" + id, 0);
         status("status-" + id, "nok");
         $("btn-retry-passo-2").hidden = false;
+        indicadorIA("nok");
         return;
       }
       barra("progresso-" + id, 100);
       status("status-" + id, "ok");
     }
+    indicadorIA("ok");
     $("btn-avancar-captura").disabled = false;
   }
 
