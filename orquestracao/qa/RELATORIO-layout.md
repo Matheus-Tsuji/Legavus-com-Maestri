@@ -16,3 +16,12 @@ Executado de verdade: Playwright (Edge) em http://localhost:8765, 1440/1024/768/
 Não testado: leitor de tela real; trap de foco completo dentro do modal.
 
 Veredito: APROVADO COM RESSALVAS — corrigir QA-L1 e decidir QA-L2; reteste após correção.
+
+## Reteste (T12) — Playwright/Edge 1440, 1024, 375; 0 erros de console em todos os fluxos
+- QA-L1 foco do modal — PASSOU: após 900 ms foco em `INPUT#pessoa-nome` (Criar) e `BUTTON#btn-fechar-json` (Ver JSON); Cancelar/Fechar devolvem o foco (editor / `#btn-ver-json`).
+- 5 abas visíveis — PASSOU em Preparação, vazio, carregando e pronto (1440); em 375 existem e aparecem ao rolar (empilhadas abaixo da ação).
+- 5 abas clicáveis — FALHOU na Preparação (QA-L3, média): cliques não alternam `aria-expanded` (1440 e 375). Vazio/carregando/pronto alternam normalmente. Causa: o listener do acordeão só é ligado em `iniciarRetorno` (js/retorno.js:76), chamado após sair da Preparação; ligar na carga da página (main.js).
+- Caixas visíveis — PASSOU: título/data com borda 1px sólida; editor delimitado por `.editor-shell` (borda 1px #9c917e).
+- Sem regressão — PASSOU: validações, @ #, Criar → modal (P006 new), Cancelar/Salvar, JSON (id/entityType/status), Revisar → pronto, Enviar → `C C C C C*`, NOK + "Tentar novamente"; 375 sem overflow (375/375); 1024 em 2 colunas (DECISÕES 16).
+- Observação (baixa, QA-L4): sem trap de foco no modal — após 5 Tab o foco sai para fora de `#modal-entidade` (aria-modal sem inert).
+Veredito: APROVADO COM RESSALVA — corrigir QA-L3 antes do aval final; QA-L4 opcional.
