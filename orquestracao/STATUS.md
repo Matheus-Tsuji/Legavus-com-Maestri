@@ -7,3 +7,4 @@
 - Fase 2: plano revisado (ajuste do stepper T06). Aguardando aprovacao do usuario.
 - Fase 4 iniciada: T02 (Prisma) e T03 (Forja) em paralelo. Commits direto em dev, so com os arquivos da tarefa (arvore de trabalho unica).
 - T02/T03 feitos e commitados em dev. Preview: portal 'Preview' em http://localhost:8765 (servidor do Prisma). Proximo: Forja T04->T05->T06.
+- T07 feita. Correcao de layout 2 colunas iniciada (branch fix/layout-2-colunas). Fase 6 aguarda pergunta ao usuario.
