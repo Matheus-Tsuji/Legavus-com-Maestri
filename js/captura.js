@@ -344,12 +344,24 @@ export function iniciarCaptura(entidades) {
     $(f).addEventListener("submit", (e) => { e.preventDefault(); salvarEntidade(); });
   }
 
-  // Escape e clique no fundo fecham os modais.
+  // Escape e clique no fundo fecham os modais; Tab/Shift+Tab circulam só dentro do modal aberto.
   document.addEventListener("keydown", (e) => {
+    if (e.key === "Tab") prenderFoco(e);
     if (e.key !== "Escape") return;
     if (criacao) cancelarEntidade();
     else if ($("modal-json").classList.contains("modal-open")) fecharModal("modal-json");
   });
+  function prenderFoco(e) {
+    const modal = document.querySelector(".modal.modal-open");
+    if (!modal) return;
+    const focaveis = [...modal.querySelectorAll("button, input, select, [tabindex]")]
+      .filter((el) => !el.disabled && el.tabIndex >= 0 && el.offsetParent); // offsetParent null = form escondido
+    const primeiro = focaveis[0], ultimo = focaveis.at(-1), atual = document.activeElement;
+    if (!modal.contains(atual) || (e.shiftKey ? atual === primeiro : atual === ultimo)) {
+      e.preventDefault();
+      (e.shiftKey ? ultimo : primeiro).focus();
+    }
+  }
   for (const id of ["modal-entidade", "modal-json"]) {
     $(id).addEventListener("click", (e) => {
       if (e.target !== e.currentTarget) return;

@@ -49,11 +49,11 @@ A POC do **LEGAVUS** é uma aplicação web frontend de página única (SPA sem 
 Este contrato estabelece os **IDs**, **classes CSS** e atributos **`data-*`** imutáveis. Nem Prisma nem Forja podem alterar esses identificadores sem alinhamento prévio.
 
 ### 3.1 Containers de Telas e Navegação
-- `#app`: Elemento raiz da aplicação.
+- `#app`: Elemento raiz da aplicação (T10: é o **cartão único em 2 colunas** `.app-card`; esquerda `.col-esq` = `#stepper-fluxo` + `.col-esq-corpo` com as views; direita = `#painel-dossie`, **sempre visível**).
 - `#view-preparacao`: Container da Tela 1 (Preparação).
   - Atributo: `data-view="preparacao"`
   - Classe ativa: `view-active` (exibida) / `view-hidden` (oculta via CSS/display).
-- `#view-captura`: Container das Telas 2.1 e 2.2 (Captura e Dossiê em 2 colunas).
+- `#view-captura`: Container da Tela 2.1 (Narração/Captura). T10: o Dossiê saiu daqui; as views são só a coluna esquerda alternada.
   - Atributo: `data-view="captura"`
   - Classe ativa: `view-active` / `view-hidden`.
 
@@ -77,11 +77,13 @@ Este contrato estabelece os **IDs**, **classes CSS** e atributos **`data-*`** im
   - `#btn-retry-passo-2`: Botão "Tentar novamente" (exibido apenas se status for `nok`).
 
 ### 3.3 Tela 2.1: Captura da Experiência (Coluna Esquerda)
-- `#stepper-fluxo`: Container do Stepper de 4 etapas:
-  - `[data-step="1"]`: *Narração da Experiência* (classe `.step-item`, status via `.is-active` / `.is-completed`).
-  - `[data-step="2"]`: *Enviar p/ Análise e Registro*.
-  - `[data-step="3"]`: *Análise Ontológica da Experiência*.
-  - `[data-step="4"]`: *Registro da Experiência*.
+- `#stepper-fluxo`: Stepper de **5 fases** (T10; antes eram 4). Agora fica **fora das views**, no topo da coluna esquerda, **compartilhado** por Preparação e Captura (`<ol>`, itens `.step-item`, `data-step="1..5"`, número dentro de `.step-dot`). Estado: `.is-active` (+ `aria-current="step"` só no ativo, a Forja deve manter) / `.is-completed` (CSS troca o número por ✓) / nenhum = futura.
+  - `[data-step="1"]`: *Preparação* (ativa na Tela 1; concluída ao avançar para a Captura).
+  - `[data-step="2"]`: *Narração da Experiência* (ativa na Captura até o 1º retorno do Leitor).
+  - `[data-step="3"]`: *Enviar p/ Análise e Registro* (ativa após o 1º retorno do Leitor).
+  - `[data-step="4"]`: *Análise Ontológica da Experiência* (ativa durante o envio, mock).
+  - `[data-step="5"]`: *Registro da Experiência* (concluída ao final; todas ✓).
+  - Mapeamento antigo → novo: etapa antiga N vira N+1 (a Preparação é a nova 1). `stepper(n)` em `retorno.js` hoje usa 1–4 e `stepper(5)` = "tudo concluído": passa a usar 2, 3, 4 e 6 (6 = todas concluídas).
 - `#input-titulo`: Campo de texto do título (`type="text"`, placeholder `Ex: Negociação com fornecedor`).
 - `#msg-erro-titulo`: Mensagem de validação do título (regra: > 9 caracteres).
 - `#input-data`: Campo de calendário da data (`type="date"`, regra: obrigatória e no passado).
@@ -122,11 +124,12 @@ Este contrato estabelece os **IDs**, **classes CSS** e atributos **`data-*`** im
 - `#btn-salvar-entidade`: Botão Salvar (adiciona à memória, salva mock e insere chip com `status: "new"`).
 
 ### 3.6 Tela 2.2: Dossiê Narrativo (Coluna Direita)
-- `#painel-dossie`: Painel lateral do Dossiê.
+- `#painel-dossie`: Painel da coluna direita, **fora de `#view-*`, visível em todas as telas** (T10).
+  - `#indicador-ia`: badge `.status-badge` no cabeçalho do painel, `data-status="idle|loading|ok|nok"` + texto (hoje "IA: aguardando"). **Novo: a Forja liga** (ex.: loading ao conectar, ok quando `ativarLeitorNarrativo` termina; texto "IA: conectada" / "Leitor ativo").
   - Atributo de estado: `data-state="empty|loading|ready"`.
-- `#dossie-vazio`: Mensagem quando vazio (`(parecer narrativo gerado)`).
+- `#dossie-vazio`: Mensagem quando vazio (`(parecer narrativo gerado)`). T12: agora fica **dentro do corpo da aba 1** (Parecer), visível só com `data-state="empty"`.
 - `#dossie-loading`: Indicador de análise e estado carregando com skeleton screens.
-- `#dossie-conteudo`: Container visível quando `data-state="ready"`.
+- `#dossie-conteudo`: Container visível quando `data-state="ready"`. T12: contém só "Referências marcadas por você"; o acordeão saiu dele e fica **sempre visível** (5 abas em todos os estados). Em cada corpo: `.acc-wait` "(aguardando análise)" (estados empty/loading; na aba 1 só em loading) e `.acc-real` (conteúdo real, visível só em `ready`; os ids `#dossie-*-texto`/`#toggle-comparacao` estão dentro). Tudo por CSS via `data-state`; a Forja não muda nada.
 - `#dossie-chips-container`: Container da seção **"Referências marcadas por você"**:
   - Lista de chips interativos com badge de tipo (`Pessoa` / `Lugar`), label e status (`existing` / `new`).
 - **Acordeão com 5 Seções:**
