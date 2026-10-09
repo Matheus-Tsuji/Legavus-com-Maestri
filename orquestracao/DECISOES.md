@@ -12,3 +12,4 @@
 11. Git: autor Matheus-Tsuji <matheustcar@gmail.com>, repo so local (sem remoto), main+dev, tag v0.1-poc ao final.
 12. Entrega final: README.md de vitrine (o que a ferramenta faz, telas, fluxo @/#, JSON, como rodar, onde trocar mocks, prints). Prisma/Forja fornecem conteudo e prints; Ramo commita em dev e, com aval, merge em main + tag v0.1-poc. Push para GitHub so com confirmacao do usuario (hoje nao ha remoto).
 13. Fase 4: arvore de trabalho unica e agentes em paralelo => commits em dev por tarefa (Ramo, add so dos arquivos da tarefa), sem branches feat/ simultaneas.
+14. TipTap: unificar em 2.27.3 (importmap Prisma + import pm no captura.js Forja). Mention aceita 1 suggestion: extensao propria com 2 Suggestion (achado da Forja, corrige pesquisa T01).
