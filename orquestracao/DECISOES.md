@@ -10,3 +10,5 @@
 9. Dossie: 5 secoes com [CONTEUDO DO LEITOR]; usuario nao responde as Perguntas de Validacao na POC.
 10. Servir via servidor estatico local; Preview em portal do Maestri.
 11. Git: autor Matheus-Tsuji <matheustcar@gmail.com>, repo so local (sem remoto), main+dev, tag v0.1-poc ao final.
+12. Entrega final: README.md de vitrine (o que a ferramenta faz, telas, fluxo @/#, JSON, como rodar, onde trocar mocks, prints). Prisma/Forja fornecem conteudo e prints; Ramo commita em dev e, com aval, merge em main + tag v0.1-poc. Push para GitHub so com confirmacao do usuario (hoje nao ha remoto).
+13. Fase 4: arvore de trabalho unica e agentes em paralelo => commits em dev por tarefa (Ramo, add so dos arquivos da tarefa), sem branches feat/ simultaneas.
