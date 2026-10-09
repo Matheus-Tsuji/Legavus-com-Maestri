@@ -96,8 +96,7 @@ Este contrato estabelece os **IDs**, **classes CSS** e atributos **`data-*`** im
   - `#contador-palavras`: Elemento que exibe a contagem (ex.: `"0 / 50 palavras"`).
   - `#msg-validacao-narrativa`: Mensagem de status da narrativa.
 - **Botões de Ação:**
-  - `#btn-revisar`: Botão "Revisar" (envia ao Leitor Narrativo). Habilitado somente quando: título > 9 chars, data válida no passado e narrativa >= 50 palavras.
-  - `#btn-enviar-analise`: Botão "Enviar para Análise e Registro →". Habilitado somente após o primeiro retorno do Leitor Narrativo.
+  - `#btn-enviar-analise`: Botão "Enviar para Análise e Registro →". Habilitado direto quando: título > 9 chars, data válida no passado e narrativa >= 50 palavras (T15: o botão "Revisar" `#btn-revisar` foi removido; ao clicar: Dossiê `loading` → `ready`, fases 3 → 4 → todas concluídas).
   - `#btn-ver-json`: Botão de depuração para inspecionar o JSON nativo do TipTap e o payload.
 
 ### 3.4 Menu de Sugestões TipTap (`@` e `#`)
@@ -270,7 +269,7 @@ export const entidades = {
 2. **Conexão IA:** Uma vez validadas as entidades, o usuário ativa a inteligência narrativa e avança para a captura.
 3. **Escrita Imersiva (Captura):** Na coluna esquerda da Tela 2, digita título e data. Ao narrar no TipTap, os atalhos `@` e `#` abrem instantaneamente as listas de sugestões contextuais, sem tirar o foco da escrita.
 4. **Criação Rápida de Entidades:** Caso a pessoa ou lugar não exista na memória, seleciona a opção "＋ Criar..." e preenche um modal sucinto, retornando ao texto sem perda de continuidade.
-5. **Revisão Inteligente:** Atingidos os requisitos mínimos (50 palavras, título > 9 caracteres, data válida no passado), o botão "Revisar" acende.
+5. **Revisão Inteligente:** Atingidos os requisitos mínimos (50 palavras, título > 9 caracteres, data válida no passado), o botão "Enviar para Análise e Registro" acende.
 6. **Leitura do Dossiê:** A coluna direita carrega com feedback de progresso e apresenta a análise da IA com acordeão e comparativo lado a lado.
 7. **Finalização:** Com o dossiê em mãos, o botão "Enviar para Análise e Registro" é liberado, avançando o stepper para conclusão mock.
 

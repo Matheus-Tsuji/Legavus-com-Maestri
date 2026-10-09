@@ -165,10 +165,11 @@ function erroData(v) {
 }
 
 // ---------- Inicialização ----------
-// Retorna { editor, montarPayload, validar } para o retorno.js.
+// Retorna { editor, montarPayload, validar, estado } para o retorno.js.
 export function iniciarCaptura(entidades) {
   const titulo = $("input-titulo"), data = $("input-data");
   const tocado = new Set();
+  const estado = { ocupado: false };
   let criacao = null; // { gatilho, props, reabrir } enquanto o modal de entidade está aberto
 
   // A lista é carregada uma vez (Tela 1) e fica em memória. Ponto de troca por API assíncrona: `items` acima.
@@ -215,7 +216,7 @@ export function iniciarCaptura(entidades) {
     }
   }
 
-  // ----- Validação e botão Revisar -----
+  // ----- Validação e botão Enviar -----
   data.max = (() => { const d = new Date(); d.setDate(d.getDate() - 1); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); })();
 
   function validar() {
@@ -231,11 +232,11 @@ export function iniciarCaptura(entidades) {
     $("contador-palavras").textContent = `${palavras} / ${MIN_PALAVRAS} palavras`;
     $("contador-palavras").classList.toggle("is-valid", palavras >= MIN_PALAVRAS);
     $("msg-validacao-narrativa").textContent =
-      palavras >= MIN_PALAVRAS ? "" : `Faltam ${MIN_PALAVRAS - palavras} palavras para revisar.`;
+      palavras >= MIN_PALAVRAS ? "" : MIN_PALAVRAS - palavras === 1 ? "Falta 1 palavra para enviar." : `Faltam ${MIN_PALAVRAS - palavras} palavras para enviar.`;
 
     const ok = !eTitulo && !eData && palavras >= MIN_PALAVRAS;
-    // Enquanto o Leitor analisa (painel em loading), o retorno.js mantém Revisar travado.
-    $("btn-revisar").disabled = !ok || $("painel-dossie").dataset.state === "loading";
+    // Enquanto o envio está em andamento, o retorno.js marca estado.ocupado e o botão fica travado.
+    $("btn-enviar-analise").disabled = !ok || estado.ocupado;
     return ok;
   }
   for (const campo of [titulo, data]) {
@@ -371,5 +372,5 @@ export function iniciarCaptura(entidades) {
 
   atualizarToolbar();
   validar();
-  return { editor, montarPayload, validar };
+  return { editor, montarPayload, validar, estado };
 }

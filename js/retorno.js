@@ -30,29 +30,40 @@ function chips(refs) {
   }));
 }
 
-// captura = { montarPayload, validar } de iniciarCaptura().
+// captura = { montarPayload, validar, estado } de iniciarCaptura().
+// Enviar: fase 3 + Dossiê carregando → Leitor → Dossiê pronto → fase 4 (Análise Ontológica) → todas concluídas.
 export function iniciarRetorno(captura) {
-  const painel = $("painel-dossie"), revisar = $("btn-revisar"), enviar = $("btn-enviar-analise");
+  const painel = $("painel-dossie"), enviar = $("btn-enviar-analise");
   const msg = $("msg-validacao-narrativa");
   let versoes = { original: "", revisada: "" };
+  let fase = 2; // fase do stepper antes do envio, para restaurar se o Leitor falhar
 
   function mostrarVersao(modo) {
     for (const b of $("toggle-comparacao").querySelectorAll("[data-mode]")) b.setAttribute("aria-pressed", b.dataset.mode === modo);
     $("dossie-narrativa-texto").textContent = versoes[modo];
   }
 
-  revisar.addEventListener("click", async () => {
+  function ocupado(sim) {
+    captura.estado.ocupado = sim;
+    enviar.disabled = true; // depois do registro só reabilita quando o usuário editar (validar)
+  }
+
+  enviar.addEventListener("click", async () => {
     const payload = captura.montarPayload();
     const anterior = painel.dataset.state;
+    ocupado(true);
+    stepper(3);
     painel.dataset.state = "loading";
-    revisar.disabled = true;
+    msg.textContent = "";
     let r;
     try {
       r = await enviarAoLeitorNarrativo(payload);
     } catch {
       painel.dataset.state = anterior;
+      stepper(fase);
+      ocupado(false);
       captura.validar();
-      msg.textContent = "O Leitor Narrativo não respondeu. Tente revisar novamente.";
+      msg.textContent = "O Leitor Narrativo não respondeu. Tente enviar novamente.";
       return;
     }
     chips(r.referenciasIdentificadas);
@@ -63,23 +74,17 @@ export function iniciarRetorno(captura) {
     versoes = { original: payload.texto, revisada: r.narrativaRevisada };
     mostrarVersao($("toggle-comparacao").querySelector('[aria-pressed="true"]').dataset.mode);
     painel.dataset.state = "ready";
-    captura.validar();
-    stepper(3);
-    enviar.disabled = false;
+
+    stepper(4);
+    msg.textContent = "Análise ontológica em andamento…";
+    await esperar(1200); // TROCAR PELO BACKEND: envio para Análise Ontológica e Registro (sem função no mock por ora).
+    stepper((fase = 6));
+    ocupado(false);
+    msg.textContent = "✓ Experiência registrada (simulação).";
   });
 
   $("toggle-comparacao").addEventListener("click", (e) => {
     const b = e.target.closest("[data-mode]");
     if (b) mostrarVersao(b.dataset.mode);
-  });
-
-  enviar.addEventListener("click", async () => {
-    enviar.disabled = true;
-    revisar.disabled = true;
-    stepper(4);
-    msg.textContent = "Análise ontológica em andamento…";
-    await esperar(1200); // TROCAR PELO BACKEND: envio para Análise Ontológica e Registro (sem função no mock por ora).
-    stepper(6);
-    msg.textContent = "✓ Experiência registrada (simulação).";
   });
 }
