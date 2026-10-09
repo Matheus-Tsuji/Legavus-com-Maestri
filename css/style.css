@@ -140,8 +140,6 @@ button { cursor: pointer; }
 .btn-sm { min-height: 2.25rem; padding: .35rem .9rem; font-size: .85rem; }
 .btn-primary { background: var(--text-primary); color: #fff; }
 .btn-primary:hover:not(:disabled) { background: var(--accent-gold-hover); }
-.btn-secondary { background: transparent; border-color: var(--text-primary); color: var(--text-primary); }
-.btn-secondary:hover:not(:disabled) { background: var(--text-primary); color: #fff; }
 .btn-ghost { background: transparent; border-color: var(--border-subtle); color: var(--text-primary); }
 .btn-ghost:hover:not(:disabled) { border-color: var(--accent-gold); background: var(--accent-gold-light); }
 .btn:active:not(:disabled) { transform: translateY(1px); }
