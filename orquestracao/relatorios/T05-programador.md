@@ -1,0 +1,11 @@
+# Relatório T05 — Forja (Programador)
+- Arquivos: `js/captura.js` (+ `js/main.js` chama `iniciarCaptura(entidades)` ao avançar). HTML/CSS não alterados.
+- API conferida via Firecrawl no src 2.11.5: `Mention` aceita UM `suggestion` (não há `suggestions[]`; a pesquisa da T01 estava errada). Solução: `Mention.extend({ name: "entityReference" })` sobrescreve `addProseMirrorPlugins` e cria 2 `Suggestion` (@ Pessoa, # Lugar) com `PluginKey` próprias. Gatilhos numa tabela `GATILHOS` (novo símbolo = 1 linha).
+- Nó: attrs `id/label/entityType/status`, renderiza `.entity-chip[data-entity-type][data-status]`; `getText()` sai como `@label`/`#label`. Busca única `buscarEntidades(lista, query)` (includes, sem caixa, máx. 10) + "＋ Criar “x” como nova pessoa/novo lugar" (só com texto digitado). Teclado: ↑ ↓ Enter/Tab Esc (Esc fecha e mantém o texto).
+- Modal: nome pré-preenchido, Cancelar volta ao menu com o texto intacto, Salvar → `salvarEntidadeNoArquivo` → push na lista em memória → chip `status:"new"` (P006/L006). Esc/clique no fundo fecham.
+- Validações: título > 9, data obrigatória, válida e < hoje (`max` = ontem), `dataAproximada` do checkbox, contador "N / 50 palavras" (`.is-valid`), Revisar só com tudo OK. Toolbar com `aria-pressed` e `disabled` via `can()`. Placeholder por decoração ProseMirror (`is-editor-empty`). Ver JSON: `getJSON()` + payload do PLANO 4.2.
+- Teste Playwright (Edge) em localhost:8765: gatilhos, filtro, Esc, criar/cancelar/salvar Pessoa e Lugar, bloqueios, 50 palavras, negrito, Ver JSON → todos OK.
+- **Aviso de versão (Prisma/Planejador):** com o importmap atual há 2 cores TipTap (2.11.5 + 2.27.3): o mention/starter-kit do esm.sh pedem `core@^2.x`. Funciona, mas é frágil. `?deps=` quebra (as extensões 2.27 exigem `canInsertNode`). Testado: trocar as 4 entradas do importmap para `@2.27.3` → 1 core só, tudo OK. Se aprovarem, eu atualizo o import `@tiptap/pm@2.11.5` do captura.js.
+- Para o Prisma: sem lugar para erro no modal (uso o texto do botão "Falhou. Tentar de novo"); o "ê" de "Experiência" nos títulos em Cormorant aparece com o acento deslocado; erros SplitType/favicon (ver T04).
+- Simplificação: `allowSpaces` desligado (menu fecha no espaço); nomes compostos são buscados por parte e editados no modal.
+- Status: FEITO.
