@@ -25,3 +25,9 @@ Veredito: APROVADO COM RESSALVAS — corrigir QA-L1 e decidir QA-L2; reteste ap�
 - Sem regressão — PASSOU: validações, @ #, Criar → modal (P006 new), Cancelar/Salvar, JSON (id/entityType/status), Revisar → pronto, Enviar → `C C C C C*`, NOK + "Tentar novamente"; 375 sem overflow (375/375); 1024 em 2 colunas (DECISÕES 16).
 - Observação (baixa, QA-L4): sem trap de foco no modal — após 5 Tab o foco sai para fora de `#modal-entidade` (aria-modal sem inert).
 Veredito: APROVADO COM RESSALVA — corrigir QA-L3 antes do aval final; QA-L4 opcional.
+
+## Reteste final (T13) — Playwright/Edge 1440 e 375
+- QA-L3 — PASSOU: as 5 abas alternam `aria-expanded` na Preparação (1440 e 375), no vazio e no pronto.
+- QA-L4 — PASSOU: Tab e Shift+Tab ficam presos em `#modal-entidade` (pessoa e lugar) e `#modal-json`; foco inicial correto (`pessoa-nome`, `lugar-nome`, `btn-fechar-json`); Esc/Cancelar devolvem o foco.
+- Sem regressão — PASSOU: fluxo completo (validações, @ #, Criar/Salvar, JSON com new, Revisar, Enviar → `C C C C C*`), NOK + retry, 375 sem overflow; console 0 erros.
+Veredito final: APROVADO. Sem bugs abertos.
