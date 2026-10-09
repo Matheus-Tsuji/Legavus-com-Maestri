@@ -1,0 +1,12 @@
+# DECISOES (Fase 1: "ok" do usuario = aceitar todas as sugestoes padrao)
+1. Data: input de calendario (type=date), exibida dd-mm-aaaa, obrigatoria, valida e no passado. Checkbox "Grau de exatidao" vira flag `dataAproximada` no payload; nao muda a regra.
+2. Stepper 4 etapas: Narracao (ativa ate Revisar) -> Enviar p/ Analise e Registro (ativa apos 1o retorno do Leitor) -> Analise Ontologica (durante o envio, estado carregando) -> Registro (concluido, mock).
+3. Estrutura: pagina unica, 3 telas em etapas (Preparacao -> Captura com Dossie ao lado), sem rotas.
+4. Dossie: lista "Referencias marcadas por voce" com chips (tipo, label, id, status existing/new), separada do texto simples.
+5. Gatilhos: so @ (Pessoa) e # (Lugar); arquitetura pronta para novos simbolos.
+6. Titulo > 9 caracteres; Revisar exige >= 50 palavras; ids P001/L001 gerados no front (mock).
+7. Nova Pessoa/Lugar: so memoria + mock salvarEntidadeNoArquivo.
+8. Dados: somente placeholders [NOME PESSOA 1] etc. Empresa/slogan/LGPD: [PENDENTE] (placeholder).
+9. Dossie: 5 secoes com [CONTEUDO DO LEITOR]; usuario nao responde as Perguntas de Validacao na POC.
+10. Servir via servidor estatico local; Preview em portal do Maestri.
+11. Git: autor Matheus-Tsuji <matheustcar@gmail.com>, repo so local (sem remoto), main+dev, tag v0.1-poc ao final.

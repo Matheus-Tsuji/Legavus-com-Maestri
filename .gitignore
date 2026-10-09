@@ -1,0 +1,20 @@
+# Dependências
+node_modules/
+
+# Variáveis de ambiente e segredos
+.env
+.env.*
+!.env.example
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE / editores
+.vscode/
+.idea/
+*.swp
+
+# Orquestração local dos agentes Maestri
+.maestri/
