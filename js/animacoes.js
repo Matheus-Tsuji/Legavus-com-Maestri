@@ -66,12 +66,12 @@ function iniciar() {
         const aberto = el.classList.contains("modal-open");
         aberto ? lenis?.stop() : document.querySelector(".modal-open") || lenis?.start();
         if (aberto && m.oldValue?.includes("modal-open") === false) {
-          gsap.from(el, { opacity: 0, duration: 0.25, ease: "none", clearProps: "all" });
+          gsap.from(el, { opacity: 0, duration: 0.25, ease: "none", clearProps: "opacity" }); // "all" faria o foco do modal cair em BODY (QA-L1)
           gsap.from(el.querySelector(".modal-box"), { y: 24, scale: 0.97, duration: 0.45, ease: E, clearProps: "all" });
         }
       } else if (el.id === "painel-dossie") {
         if (el.dataset.state === "ready" && m.oldValue !== "ready") {
-          gsap.from("#dossie-conteudo .chips-block, #dossie-conteudo .accordion-item", { opacity: 0, y: 14, duration: 0.6, ease: E, stagger: 0.09, clearProps: "all" });
+          gsap.from("#dossie-conteudo .chips-block, .dossie-accordion .accordion-item", { opacity: 0, y: 14, duration: 0.6, ease: E, stagger: 0.09, clearProps: "all" });
         }
       } else if (el.matches(".step-item")) {
         if (el.classList.contains("is-active") && !m.oldValue?.includes("is-active")) gsap.fromTo(el.querySelector(".step-dot"), { scale: 0.7 }, { scale: 1, duration: 0.5, ease: "back.out(2)", clearProps: "all" });

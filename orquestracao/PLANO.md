@@ -127,9 +127,9 @@ Este contrato estabelece os **IDs**, **classes CSS** e atributos **`data-*`** im
 - `#painel-dossie`: Painel da coluna direita, **fora de `#view-*`, visível em todas as telas** (T10).
   - `#indicador-ia`: badge `.status-badge` no cabeçalho do painel, `data-status="idle|loading|ok|nok"` + texto (hoje "IA: aguardando"). **Novo: a Forja liga** (ex.: loading ao conectar, ok quando `ativarLeitorNarrativo` termina; texto "IA: conectada" / "Leitor ativo").
   - Atributo de estado: `data-state="empty|loading|ready"`.
-- `#dossie-vazio`: Mensagem quando vazio (`(parecer narrativo gerado)`).
+- `#dossie-vazio`: Mensagem quando vazio (`(parecer narrativo gerado)`). T12: agora fica **dentro do corpo da aba 1** (Parecer), visível só com `data-state="empty"`.
 - `#dossie-loading`: Indicador de análise e estado carregando com skeleton screens.
-- `#dossie-conteudo`: Container visível quando `data-state="ready"`.
+- `#dossie-conteudo`: Container visível quando `data-state="ready"`. T12: contém só "Referências marcadas por você"; o acordeão saiu dele e fica **sempre visível** (5 abas em todos os estados). Em cada corpo: `.acc-wait` "(aguardando análise)" (estados empty/loading; na aba 1 só em loading) e `.acc-real` (conteúdo real, visível só em `ready`; os ids `#dossie-*-texto`/`#toggle-comparacao` estão dentro). Tudo por CSS via `data-state`; a Forja não muda nada.
 - `#dossie-chips-container`: Container da seção **"Referências marcadas por você"**:
   - Lista de chips interativos com badge de tipo (`Pessoa` / `Lugar`), label e status (`existing` / `new`).
 - **Acordeão com 5 Seções:**

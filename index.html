@@ -185,11 +185,6 @@
           </div>
           <div class="dossie-corpo" data-lenis-prevent>
 
-          <div id="dossie-vazio" class="dossie-vazio">
-            <p class="dossie-vazio-texto">(parecer narrativo gerado)</p>
-            <p class="field-hint">O resultado da IA aparecerá aqui. Na captura, use “Revisar” para receber o parecer do Leitor Narrativo.</p>
-          </div>
-
           <div id="dossie-loading" class="dossie-loading" role="status" aria-live="polite">
             <p class="loading-text"><span class="spinner" aria-hidden="true"></span>O Leitor Narrativo está analisando…</p>
             <div class="skeleton" aria-hidden="true"></div>
@@ -203,40 +198,40 @@
               <div id="dossie-chips-container" class="chips-container"></div>
               <p class="field-hint">Nomes escritos sem @ ou # são texto simples; o Leitor Narrativo tenta identificá-los depois.</p>
             </section>
+          </div>
 
-            <div class="dossie-accordion">
+          <div class="dossie-accordion">
               <div class="accordion-item is-open" data-accordion="parecer">
                 <h3><button type="button" class="accordion-header" id="acc-h-parecer" aria-expanded="true" aria-controls="acc-b-parecer"><span>Parecer Narrativo</span><span class="acc-icon" aria-hidden="true"></span></button></h3>
-                <div class="accordion-body" id="acc-b-parecer" role="region" aria-labelledby="acc-h-parecer"><div class="accordion-inner"><p id="dossie-parecer-texto">[CONTEÚDO DO LEITOR]</p></div></div>
+                <div class="accordion-body" id="acc-b-parecer" role="region" aria-labelledby="acc-h-parecer"><div class="accordion-inner"><div id="dossie-vazio" class="dossie-vazio"><p class="dossie-vazio-texto">(parecer narrativo gerado)</p><p class="field-hint">O resultado da IA aparecerá aqui. Na captura, use “Revisar” para receber o parecer do Leitor Narrativo.</p></div><p class="acc-wait">(aguardando análise)</p><div class="acc-real"><p id="dossie-parecer-texto">[CONTEÚDO DO LEITOR]</p></div></div></div>
               </div>
 
               <div class="accordion-item" data-accordion="narrativa-revisada">
                 <h3><button type="button" class="accordion-header" id="acc-h-narrativa" aria-expanded="false" aria-controls="acc-b-narrativa"><span>Narrativa Revisada</span><span class="acc-icon" aria-hidden="true"></span></button></h3>
-                <div class="accordion-body" id="acc-b-narrativa" role="region" aria-labelledby="acc-h-narrativa"><div class="accordion-inner">
+                <div class="accordion-body" id="acc-b-narrativa" role="region" aria-labelledby="acc-h-narrativa"><div class="accordion-inner"><p class="acc-wait">(aguardando análise)</p><div class="acc-real">
                   <div id="toggle-comparacao" class="segmented" role="group" aria-label="Comparar versões da narrativa">
                     <button type="button" data-mode="original" aria-pressed="true">Original</button>
                     <button type="button" data-mode="revisada" aria-pressed="false">Revisada</button>
                   </div>
                   <p id="dossie-narrativa-texto" aria-live="polite">[CONTEÚDO DO LEITOR]</p>
-                </div></div>
+                </div></div></div>
               </div>
 
               <div class="accordion-item" data-accordion="lacunas">
                 <h3><button type="button" class="accordion-header" id="acc-h-lacunas" aria-expanded="false" aria-controls="acc-b-lacunas"><span>Lacunas Identificadas</span><span class="acc-icon" aria-hidden="true"></span></button></h3>
-                <div class="accordion-body" id="acc-b-lacunas" role="region" aria-labelledby="acc-h-lacunas"><div class="accordion-inner"><div id="dossie-lacunas-texto">[CONTEÚDO DO LEITOR]</div></div></div>
+                <div class="accordion-body" id="acc-b-lacunas" role="region" aria-labelledby="acc-h-lacunas"><div class="accordion-inner"><p class="acc-wait">(aguardando análise)</p><div class="acc-real"><div id="dossie-lacunas-texto">[CONTEÚDO DO LEITOR]</div></div></div></div>
               </div>
 
               <div class="accordion-item" data-accordion="perguntas">
                 <h3><button type="button" class="accordion-header" id="acc-h-perguntas" aria-expanded="false" aria-controls="acc-b-perguntas"><span>Perguntas de Validação</span><span class="acc-icon" aria-hidden="true"></span></button></h3>
-                <div class="accordion-body" id="acc-b-perguntas" role="region" aria-labelledby="acc-h-perguntas"><div class="accordion-inner"><div id="dossie-perguntas-texto">[CONTEÚDO DO LEITOR]</div></div></div>
+                <div class="accordion-body" id="acc-b-perguntas" role="region" aria-labelledby="acc-h-perguntas"><div class="accordion-inner"><p class="acc-wait">(aguardando análise)</p><div class="acc-real"><div id="dossie-perguntas-texto">[CONTEÚDO DO LEITOR]</div></div></div></div>
               </div>
 
               <div class="accordion-item" data-accordion="dossie-resumo">
                 <h3><button type="button" class="accordion-header" id="acc-h-resumo" aria-expanded="false" aria-controls="acc-b-resumo"><span>Dossiê Narrativo</span><span class="acc-icon" aria-hidden="true"></span></button></h3>
-                <div class="accordion-body" id="acc-b-resumo" role="region" aria-labelledby="acc-h-resumo"><div class="accordion-inner"><p id="dossie-resumo-texto">[CONTEÚDO DO LEITOR]</p></div></div>
+                <div class="accordion-body" id="acc-b-resumo" role="region" aria-labelledby="acc-h-resumo"><div class="accordion-inner"><p class="acc-wait">(aguardando análise)</p><div class="acc-real"><p id="dossie-resumo-texto">[CONTEÚDO DO LEITOR]</p></div></div></div>
               </div>
             </div>
-          </div>
           </div>
         </aside>
   </main>
