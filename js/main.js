@@ -27,6 +27,14 @@ export function mostrarTela(nome) {
   titulo.focus();
 }
 
+// Acordeão do Dossiê: o painel é visível desde a Preparação, então liga no boot (uma vez só).
+for (const h of document.querySelectorAll("#painel-dossie .accordion-header")) {
+  h.addEventListener("click", () => {
+    const aberto = h.closest(".accordion-item").classList.toggle("is-open");
+    h.setAttribute("aria-expanded", aberto);
+  });
+}
+
 iniciarPreparacao((entidades) => {
   mostrarTela("captura");
   stepper(2);

@@ -73,13 +73,6 @@ export function iniciarRetorno(captura) {
     if (b) mostrarVersao(b.dataset.mode);
   });
 
-  for (const h of painel.querySelectorAll(".accordion-header")) {
-    h.addEventListener("click", () => {
-      const aberto = h.closest(".accordion-item").classList.toggle("is-open");
-      h.setAttribute("aria-expanded", aberto);
-    });
-  }
-
   enviar.addEventListener("click", async () => {
     enviar.disabled = true;
     revisar.disabled = true;
