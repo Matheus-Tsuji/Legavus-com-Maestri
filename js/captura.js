@@ -5,8 +5,8 @@ import { Editor } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import Mention from "@tiptap/extension-mention";
 import Suggestion from "@tiptap/suggestion";
-import { PluginKey } from "https://esm.sh/@tiptap/pm@2.11.5/state";
-import { Decoration, DecorationSet } from "https://esm.sh/@tiptap/pm@2.11.5/view";
+import { PluginKey } from "https://esm.sh/@tiptap/pm@2.27.3/state";
+import { Decoration, DecorationSet } from "https://esm.sh/@tiptap/pm@2.27.3/view";
 import { salvarEntidadeNoArquivo } from "../services/mock.js";
 
 const $ = (id) => document.getElementById(id);
@@ -298,6 +298,7 @@ export function iniciarCaptura(entidades) {
     campoNome.removeAttribute("aria-invalid");
     salvar.textContent = "Salvar";
     salvar.disabled = false;
+    $("msg-erro-entidade").textContent = "";
     abrirModal("modal-entidade", campoNome);
   }
 
@@ -321,12 +322,14 @@ export function iniciarCaptura(entidades) {
       : { pais: $("lugar-pais").value.trim(), uf: $("lugar-uf").value.trim().toUpperCase(), cidade: $("lugar-cidade").value.trim() };
     salvar.disabled = true;
     salvar.textContent = "Salvando…";
+    $("msg-erro-entidade").textContent = "";
     let nova;
     try {
       nova = await salvarEntidadeNoArquivo({ label, entityType: gatilho.entityType, ...extras });
     } catch {
       salvar.disabled = false;
-      salvar.textContent = "Falhou. Tentar de novo";
+      salvar.textContent = "Salvar";
+      $("msg-erro-entidade").textContent = "Não foi possível salvar. Tente novamente.";
       return;
     }
     entidades[gatilho.lista].push(nova);

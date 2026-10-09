@@ -16,7 +16,7 @@
   --nok: #9B3B2F;
   --nok-bg: #F8E9E6;
 
-  --font-title: 'Cormorant Garamond', Georgia, serif;
+  --font-title: 'EB Garamond', 'Cormorant Garamond', Georgia, serif; /* EB Garamond = só o ê */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
   --radius: 4px;
@@ -67,7 +67,7 @@ button { cursor: pointer; }
 /* ---------- Tipografia de título ---------- */
 .display {
   font: 400 clamp(2.5rem, 6vw, 4.5rem)/1.02 var(--font-title);
-  letter-spacing: -.01em;
+  letter-spacing: 0; font-kerning: normal; font-feature-settings: "kern", "liga", "ccmp", "mark", "mkmk";
 }
 .display-sm { font-size: clamp(1.7rem, 2.6vw, 2.25rem); line-height: 1.1; }
 .lede { max-width: 52ch; margin-top: 1.25rem; color: var(--text-secondary); font-size: 1.05rem; }
@@ -180,7 +180,7 @@ input[type="text"], input[type="date"], input[type="number"], select {
   background: var(--bg-primary); border: 1px solid var(--border-subtle); border-radius: var(--radius);
   transition: border-color var(--dur), background-color var(--dur);
 }
-input::placeholder { color: #8A847D; }
+input::placeholder { color: #736D66; }
 input:hover, select:hover { border-color: #CFC8BD; }
 input:focus-visible, select:focus-visible { border-color: var(--accent-gold); background: var(--bg-surface); }
 input[aria-invalid="true"] { border-color: var(--nok); }
@@ -214,7 +214,7 @@ input[aria-invalid="true"] { border-color: var(--nok); }
 .editor .ProseMirror pre { padding: .75rem 1rem; background: var(--bg-secondary); border-radius: var(--radius); font: .85rem/1.5 ui-monospace, Consolas, monospace; overflow-x: auto; }
 .editor .ProseMirror hr { border: 0; border-top: 1px solid var(--border-subtle); }
 .editor .ProseMirror p.is-editor-empty:first-child::before { /* placeholder do TipTap */
-  content: attr(data-placeholder); float: left; height: 0; pointer-events: none; color: #8A847D;
+  content: attr(data-placeholder); float: left; height: 0; pointer-events: none; color: #736D66;
 }
 .editor-foot { display: flex; justify-content: space-between; gap: 1rem; padding: .5rem 1rem; border-top: 1px solid var(--border-subtle); font-size: .8rem; color: var(--text-secondary); }
 kbd { padding: 0 .35rem; border: 1px solid var(--border-subtle); border-bottom-width: 2px; border-radius: 3px; background: var(--bg-surface); font: 500 .8rem var(--font-sans); }
@@ -327,3 +327,23 @@ kbd { padding: 0 .35rem; border: 1px solid var(--border-subtle); border-bottom-w
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; transition-delay: 0s !important; scroll-behavior: auto !important; }
 }
+
+/* ---------- Animações (T07) ---------- */
+.line { overflow: hidden; padding-block: .14em; margin-block: -.14em; } /* máscara da revelação, sem cortar acentos */
+.word { display: inline-block; }
+/* Título invisível até o SplitType rodar; se o JS falhar, aparece após 2,5s */
+.anim .view-active .display:not(.is-split) { visibility: hidden; animation: mostrar 0s 2.5s forwards; }
+@keyframes mostrar { to { visibility: visible; } }
+
+.cursor {
+  position: fixed; left: -.5rem; top: -.5rem; z-index: 200; width: 1rem; height: 1rem; border-radius: 50%;
+  border: 1.5px solid var(--accent-gold); pointer-events: none; opacity: 0;
+  transition: opacity 200ms, width 200ms, height 200ms, margin 200ms, background-color 200ms;
+}
+.cursor.is-on { opacity: .8; }
+.cursor[data-estado="hover"] { width: 2.25rem; height: 2.25rem; margin: -.625rem 0 0 -.625rem; background: rgba(176, 141, 87, .14); }
+.cursor[data-estado="off"] { opacity: 0; }
+@media (hover: none), (pointer: coarse) { .cursor { display: none; } }
+.line { height: auto !important; }
+.col-captura .display { font-size: clamp(2.25rem, 4.2vw, 3.5rem); }
+.chip { white-space: normal; max-width: 100%; }
